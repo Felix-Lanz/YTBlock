@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="popup.css" />
+    <title>YTBlock</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="brand">
+        <span class="brand-mark">YT</span>
+        <span class="brand-name">Block</span>
+      </div>
+      <div id="statusPill" class="pill pill-locked">Locked</div>
+    </header>
+
+    <section id="lockBar" class="lockbar">
+      <div id="lockMsg" class="lockmsg"></div>
+      <button id="snoozeBtn" class="btn btn-primary" type="button"></button>
+    </section>
+
+    <main id="list" class="list" aria-label="Blockable YouTube elements"></main>
+
+    <section class="timelimit">
+      <div class="tl-head">
+        <div class="item-text">
+          <div class="item-title">Hard daily time limit</div>
+          <div class="item-desc">Lock YouTube for the rest of the day once you hit the limit.</div>
+        </div>
+        <label class="switch" id="tlSwitch">
+          <input type="checkbox" id="tlEnable" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="setting-row">
+        <label for="tlMinutes">Minutes per day</label>
+        <div class="setting-field">
+          <input id="tlMinutes" type="number" min="1" max="1440" step="1" />
+          <span class="unit">min</span>
+        </div>
+      </div>
+      <div class="tl-usage">
+        <div class="bar"><div id="tlBar" class="bar-fill"></div></div>
+        <div id="tlUsage" class="hint"></div>
+      </div>
+    </section>
+
+    <section class="settings">
+      <details>
+        <summary>Snooze settings</summary>
+        <div class="setting-row">
+          <label for="delayInput">Wait before unblocking</label>
+          <div class="setting-field">
+            <input id="delayInput" type="number" min="1" max="1440" step="1" />
+            <span class="unit">min</span>
+          </div>
+        </div>
+        <div class="setting-row">
+          <label for="windowInput">Editing window length</label>
+          <div class="setting-field">
+            <input id="windowInput" type="number" min="1" max="120" step="1" />
+            <span class="unit">min</span>
+          </div>
+        </div>
+        <p id="settingsHint" class="hint"></p>
+      </details>
+    </section>
+
+    <footer class="footer">
+      <span>Blocking is instant · unblocking needs a snooze</span>
+    </footer>
+
+    <script src="elements.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
