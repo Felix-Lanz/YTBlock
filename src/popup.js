@@ -357,7 +357,30 @@
     save();
   }
 
+  /* ---------------------------- host permission --------------------------- */
+
+  // Firefox treats MV3 host_permissions as optional: the user may not have
+  // granted (or may later revoke) youtube.com access, in which case the
+  // content script never runs. Chromium always reports them as granted.
+  const HOST_PERMS = { origins: chrome.runtime.getManifest().host_permissions };
+
+  function checkHostPermission() {
+    chrome.permissions.contains(HOST_PERMS, function (granted) {
+      document.getElementById("permBar").hidden = !!granted;
+    });
+  }
+
+  function onPermClick() {
+    // Must be called synchronously from the click (user gesture).
+    chrome.permissions.request(HOST_PERMS, function () {
+      checkHostPermission();
+    });
+  }
+
   /* --------------------------------- init --------------------------------- */
+
+  document.getElementById("permBtn").addEventListener("click", onPermClick);
+  checkHostPermission();
 
   els.snoozeBtn.addEventListener("click", onSnoozeClick);
   els.delayInput.addEventListener("change", onDelayChange);

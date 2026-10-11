@@ -90,6 +90,20 @@ body {
   border-bottom: 1px solid var(--border);
 }
 
+/* Firefox: MV3 host permissions can be withheld/revoked by the user. */
+.permbar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px;
+  background: rgba(255, 179, 0, 0.12);
+  border-bottom: 1px solid var(--border);
+}
+
+.permbar[hidden] {
+  display: none;
+}
+
 .lockmsg {
   font-size: 12px;
   color: var(--muted);

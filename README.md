@@ -1,6 +1,6 @@
 # YTBlock — YouTube UI Blocker
 
-A Chromium (Brave/Chrome/Edge) extension that hides distracting YouTube UI
+A Chromium (Brave/Chrome/Edge) and Firefox extension that hides distracting YouTube UI
 elements. Unblocking anything is deliberately gated behind a **snooze delay** so
 you can't cave on impulse.
 
@@ -37,11 +37,28 @@ later, and the window will be open (or still counting) as expected.
 
 ## Install (unpacked)
 
+### Chromium
+
 1. Open `brave://extensions` (or `chrome://extensions`).
 2. Enable **Developer mode** (top-right).
 3. Click **Load unpacked** and select this folder
    (`.../Extensions/YTBlock`).
 4. Pin the extension and click its icon to choose what to block.
+
+### Firefox (121+)
+
+1. Open `about:debugging#/runtime/this-firefox`.
+2. Click **Load Temporary Add-on…** and pick this folder's `manifest.json`.
+3. Pin the extension and open its popup. If it shows a **Grant access**
+   banner, click it — Firefox lets you withhold/revoke the youtube.com
+   permission, and nothing gets hidden without it. (You can also check it in
+   `about:addons` → YTBlock → Permissions.)
+
+Temporary add-ons are removed when Firefox restarts. For a permanent install,
+package the folder (e.g. `npx web-ext build`) and sign it via
+[addons.mozilla.org](https://addons.mozilla.org/developers/) (self-distribution
+is fine), or use Firefox Developer Edition/Nightly with
+`xpinstall.signatures.required` set to `false`.
 
 Changes apply live on open YouTube tabs — no reload needed.
 
@@ -59,5 +76,8 @@ icons/                Extension icons
 
 - Selectors track YouTube's current DOM. YouTube changes often; if something
   stops hiding, update the relevant entry's `css` array in `src/elements.js`.
-- Uses `:has()` selectors, supported in current Chromium.
-- Storage is `chrome.storage.local` (per-browser, not synced).
+- Uses `:has()` selectors, supported in current Chromium and Firefox 121+.
+- Storage is `chrome.storage.local` (per-browser, not synced). Firefox
+  supports the `chrome.*` namespace, so the same code runs in both browsers.
+- `browser_specific_settings` in the manifest is Firefox-only; Chromium shows
+  a harmless "unrecognized manifest key" warning for it.
